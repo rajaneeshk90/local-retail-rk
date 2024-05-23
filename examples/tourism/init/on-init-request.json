@@ -117,6 +117,26 @@
       "fulfillments": [
         {
           "id": "f1",
+          "stops": [
+            {
+              "type": "start",
+              "location": {
+                "gps": "32.19742,77.23599"
+              },
+              "time": {
+                "timestamp": "2024-04-15T08:00:00.000Z"
+              }
+            },
+            {
+              "type": "end",
+              "location": {
+                "gps": "32.31783,77.37117"
+              },
+              "time": {
+                "timestamp": "2024-04-18T08:00:00.000Z"
+              }
+            }
+          ],
           "customer": {
             "person": {
               "name": "Shubham Thakur"
