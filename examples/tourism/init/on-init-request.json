@@ -69,37 +69,6 @@
             },
             {
               "descriptor": {
-                "name": "fulfillment-details"
-              },
-              "list": [
-                {
-                  "descriptor": {
-                    "name": "fulfillment_start_time"
-                  },
-                  "value": "15th-April-2023"
-                },
-                {
-                  "descriptor": {
-                    "name": "fulfillment_end_time"
-                  },
-                  "value": "20th-April-2023"
-                },
-                {
-                  "descriptor": {
-                    "name": "fulfillment_start_loc"
-                  },
-                  "value": "32.19742/77.23599"
-                },
-                {
-                  "descriptor": {
-                    "name": "fulfillment_end_loc"
-                  },
-                  "value": "32.31783/77.37117"
-                }
-              ]
-            },
-            {
-              "descriptor": {
                 "name": "misc-tags"
               },
               "list": [
