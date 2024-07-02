@@ -1,0 +1,29 @@
+properties:
+  message:
+    properties:
+      order:
+        properties:
+          provider:
+            properties:
+              id:
+                type: string
+            required:
+              - id
+          items:
+            type: array
+            minItems: 1
+            items:
+              properties:
+                quantity:
+                  properties:
+                    selected:
+                      required:
+                        - count
+                  required:
+                    - selected
+              required:
+                - id
+                - quantity
+        required:
+          - provider
+          - items

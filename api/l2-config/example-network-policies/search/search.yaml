@@ -1,0 +1,5 @@
+allOf:
+  - $ref : "./buyer-finder-fee-tag.yaml"
+  - $ref : "./search-intent-tag.yaml"
+  - $ref : "./settlement-terms-tag.yaml"
+  - $ref : "./search-fulfilment.yaml"

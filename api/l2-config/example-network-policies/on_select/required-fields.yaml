@@ -1,0 +1,15 @@
+properties:
+  message:
+    properties:
+      order:
+        properties:
+          provider:
+            required:
+              - id
+          items:
+            minItems: 1 
+        required:
+          - id
+          - provider
+          - items
+          - quote

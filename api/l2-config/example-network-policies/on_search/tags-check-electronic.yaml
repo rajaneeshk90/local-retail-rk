@@ -1,0 +1,50 @@
+if:
+  properties:
+    message:
+      properties:
+        catalog:
+          properties:
+            providers:
+              type: array
+              items:
+                properties:
+                  items: 
+                    type: array
+                    items:
+                      properties:
+                        category_ids:
+                          contains:
+                            const: "c2"
+
+then:
+  properties:
+    message:
+      properties:
+        catalog:
+          properties:
+            providers:
+              type: array
+              items:
+                properties:
+                  items: 
+                    type: array
+                    items:
+                      properties:
+                        tags:
+                          type: array
+                          items:
+                            properties:
+                              list:
+                                type: array
+                                minItems: 3
+                                uniqueItems: true
+                                items: 
+                                  properties:
+                                    descriptor:
+                                      properties:
+                                        code:
+                                          type: string
+                                          enum:
+                                            - user-manual
+                                            - technical-specs
+                                            - model-no

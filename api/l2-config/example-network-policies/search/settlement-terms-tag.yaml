@@ -1,0 +1,138 @@
+if:
+  properties:
+    message:
+      properties:
+        intent:
+          properties:
+            tags:
+              items:
+                properties:
+                  descriptor:
+                    properties:
+                      code:
+                        const: "SETTLEMENT_TERMS"
+then:
+  properties:
+    message:
+      properties:
+        intent:
+          properties:
+            tags:
+              items:
+                properties:
+                  list:
+                    type: array
+                    items:
+                      allOf:
+                        - if:
+                            properties:
+                              descriptor:
+                                properties:
+                                  code:
+                                    const: SETTLEMENT_WINDOW
+                          then:
+                            properties:
+                              value:
+                                type: string
+                                pattern: "^[0-9]+[SMHD]$"
+                            required:
+                              - descriptor
+                              - value
+                        - if:
+                            properties:
+                              descriptor:
+                                properties:
+                                  code:
+                                    const: SETTLEMENT_BASIS
+                          then:
+                            properties:
+                              value:
+                                const: INVOICE_RECEIPT
+                            required:
+                              - descriptor
+                              - value
+                        - if:
+                            properties:
+                              descriptor:
+                                properties:
+                                  code:
+                                    const: MANDATORY_ARBITRATION
+                          then:
+                            properties:
+                              value:
+                                enum:
+                                  - "TRUE"
+                                  - "FALSE"
+                            required:
+                              - descriptor
+                              - value
+                        - if:
+                            properties:
+                              descriptor:
+                                properties:
+                                  code:
+                                    const: COURT_JURISDICTION
+                          then:
+                            properties:
+                              value:
+                                type: string
+                            required:
+                              - descriptor
+                              - value
+                        - if:
+                            properties:
+                              descriptor:
+                                properties:
+                                  code:
+                                    const: STATIC_TERMS
+                          then:
+                            properties:
+                              value:
+                                type: string
+                                format: uri
+                            required:
+                              - descriptor
+                              - value
+                        - if:
+                            properties:
+                              descriptor:
+                                properties:
+                                  code:
+                                    const: SETTLEMENT_TYPE
+                          then:
+                            properties:
+                              value:
+                                enum:
+                                  - neft
+                                  - upi
+                                  - rtgs
+                            required:
+                              - descriptor
+                              - value
+                        - if:
+                            properties:
+                              descriptor:
+                                properties:
+                                  code:
+                                    const: SETTLEMENT_AMOUNT
+                          then:
+                            properties:
+                              value:
+                                type: string
+                                pattern: ^\d+(\.\d+)?$
+                            required:
+                              - descriptor
+                              - value
+                        - if:
+                            properties:
+                              descriptor:
+                                properties:
+                                  code:
+                                    const: DELAY_INTEREST
+                          then:
+                            value:
+                              type: string
+                              pattern: ^\d+(\.\d+)?$
+                            required:
+                              - descriptor
+                              - value

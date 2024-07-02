@@ -1,0 +1,65 @@
+if:
+  properties:
+    message:
+      properties:
+        order:
+          properties:
+            fulfillments:
+              type: array
+              items:
+                properties:
+                  type:
+                    const: "DELIVERY"
+then:
+  properties:
+    message:
+      properties:
+        order:
+          properties:
+            fulfillments:
+              type: array
+              items:
+                properties:
+                  stops:
+                    type: array
+                    minItems: 1
+                    items:
+                      properties:
+                        location:
+                          properties:
+                            gps:
+                              type: string
+                            address:
+                              type: string
+                            area_code:
+                              type: string
+                            city:
+                              properties:
+                                name:
+                                  type: string
+                              required:
+                                - name
+                            state:
+                              properties:
+                                name:
+                                  type: string
+                              required:
+                                - name
+                            country:
+                              properties:
+                                code:
+                                  type: string
+                              required:
+                                - code
+                          required:
+                            - gps
+                            - address
+                            - area_code
+                            - city
+                            - state
+                            - country
+                      required:
+                        - location
+                required:
+                  - type
+                  - stops

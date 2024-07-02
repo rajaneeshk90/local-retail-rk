@@ -17,285 +17,14 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/IntentSchema'
-                - allOf:
-                    - if:
-                        properties:
-                          message:
-                            properties:
-                              intent:
-                                properties:
-                                  tags:
-                                    items:
-                                      properties:
-                                        descriptor:
-                                          properties:
-                                            code:
-                                              const: BUYER_FINDER_FEES
-                      then:
-                        properties:
-                          message:
-                            properties:
-                              intent:
-                                properties:
-                                  tags:
-                                    items:
-                                      properties:
-                                        list:
-                                          type: array
-                                          items:
-                                            allOf:
-                                              - if:
-                                                  properties:
-                                                    descriptor:
-                                                      properties:
-                                                        code:
-                                                          const: BUYER_FINDER_FEES_PERCENTAGE
-                                                then:
-                                                  properties:
-                                                    value:
-                                                      pattern: '^(0|[1-9][0-9]?(\.\d+)?|99(\.9+)?)$'
-                                                  required:
-                                                    - descriptor
-                                                    - value
-                                              - if:
-                                                  properties:
-                                                    descriptor:
-                                                      properties:
-                                                        code:
-                                                          const: BUYER_FINDER_FEES_AMOUNT
-                                                then:
-                                                  properties:
-                                                    value:
-                                                      pattern: ^-?\d+(\.\d+)?$
-                                                  required:
-                                                    - descriptor
-                                                    - value
-                    - properties:
-                        message:
-                          properties:
-                            intent:
-                              properties:
-                                tags:
-                                  type: array
-                                  items:
-                                    properties:
-                                      descriptor:
-                                        properties:
-                                          code:
-                                            enum:
-                                              - BUYER_FINDER_FEES
-                                              - SETTLEMENT_TERMS
-                    - if:
-                        properties:
-                          message:
-                            properties:
-                              intent:
-                                properties:
-                                  tags:
-                                    items:
-                                      properties:
-                                        descriptor:
-                                          properties:
-                                            code:
-                                              const: SETTLEMENT_TERMS
-                      then:
-                        properties:
-                          message:
-                            properties:
-                              intent:
-                                properties:
-                                  tags:
-                                    items:
-                                      properties:
-                                        list:
-                                          type: array
-                                          items:
-                                            allOf:
-                                              - if:
-                                                  properties:
-                                                    descriptor:
-                                                      properties:
-                                                        code:
-                                                          const: SETTLEMENT_WINDOW
-                                                then:
-                                                  properties:
-                                                    value:
-                                                      type: string
-                                                      pattern: '^[0-9]+[SMHD]$'
-                                                  required:
-                                                    - descriptor
-                                                    - value
-                                              - if:
-                                                  properties:
-                                                    descriptor:
-                                                      properties:
-                                                        code:
-                                                          const: SETTLEMENT_BASIS
-                                                then:
-                                                  properties:
-                                                    value:
-                                                      const: INVOICE_RECEIPT
-                                                  required:
-                                                    - descriptor
-                                                    - value
-                                              - if:
-                                                  properties:
-                                                    descriptor:
-                                                      properties:
-                                                        code:
-                                                          const: MANDATORY_ARBITRATION
-                                                then:
-                                                  properties:
-                                                    value:
-                                                      enum:
-                                                        - 'TRUE'
-                                                        - 'FALSE'
-                                                  required:
-                                                    - descriptor
-                                                    - value
-                                              - if:
-                                                  properties:
-                                                    descriptor:
-                                                      properties:
-                                                        code:
-                                                          const: COURT_JURISDICTION
-                                                then:
-                                                  properties:
-                                                    value:
-                                                      type: string
-                                                  required:
-                                                    - descriptor
-                                                    - value
-                                              - if:
-                                                  properties:
-                                                    descriptor:
-                                                      properties:
-                                                        code:
-                                                          const: STATIC_TERMS
-                                                then:
-                                                  properties:
-                                                    value:
-                                                      type: string
-                                                      format: uri
-                                                  required:
-                                                    - descriptor
-                                                    - value
-                                              - if:
-                                                  properties:
-                                                    descriptor:
-                                                      properties:
-                                                        code:
-                                                          const: SETTLEMENT_TYPE
-                                                then:
-                                                  properties:
-                                                    value:
-                                                      enum:
-                                                        - neft
-                                                        - upi
-                                                        - rtgs
-                                                  required:
-                                                    - descriptor
-                                                    - value
-                                              - if:
-                                                  properties:
-                                                    descriptor:
-                                                      properties:
-                                                        code:
-                                                          const: SETTLEMENT_AMOUNT
-                                                then:
-                                                  properties:
-                                                    value:
-                                                      type: string
-                                                      pattern: ^\d+(\.\d+)?$
-                                                  required:
-                                                    - descriptor
-                                                    - value
-                                              - if:
-                                                  properties:
-                                                    descriptor:
-                                                      properties:
-                                                        code:
-                                                          const: DELAY_INTEREST
-                                                then:
-                                                  value:
-                                                    type: string
-                                                    pattern: ^\d+(\.\d+)?$
-                                                  required:
-                                                    - descriptor
-                                                    - value
-                    - properties:
-                        message:
-                          properties:
-                            intent:
-                              properties:
-                                fulfillment:
-                                  properties:
-                                    type:
-                                      enum:
-                                        - DELIVERY
-                                        - PICKUP
-                                    stops:
-                                      type: array
-                                      items:
-                                        properties:
-                                          location:
-                                            properties:
-                                              gps:
-                                                type: string
-                                            required:
-                                              - gps
-                                        required:
-                                          - location
-                              required:
-                                - fulfillment
+                - $ref: "#/components/schemas/IntentSchema"
+                - $ref: "./example-network-policies/search/search.yaml"
                 - properties:
                     action:
                       enum:
                         - search
             examples:
-              BAP declares the customer's intent to buy/avail products or services:
-                value:
-                  context:
-                    location:
-                      country:
-                        code: IND
-                      city:
-                        code: 'std:080'
-                    domain: network-domain
-                    timestamp: '2023-03-23T04:41:16Z'
-                    bap_id: example-bap.com
-                    transaction_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    message_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    version: 1.1.0
-                    action: search
-                    bap_uri: 'https://api.example-bap.com/v1'
-                  message:
-                    intent:
-                      item:
-                        descriptor:
-                          name: Name of product/service
-              Custom Intent to buy a service:
-                value:
-                  context:
-                    location:
-                      country:
-                        code: IND
-                      city:
-                        code: 'std:080'
-                    domain: network-domain
-                    timestamp: '2023-03-23T04:41:16Z'
-                    bap_id: example-bap.com
-                    transaction_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    message_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    version: 1.1.0
-                    action: search
-                    bap_uri: 'https://api.example-bap.com/v1'
-                  message:
-                    intent:
-                      item:
-                        descriptor:
-                          name: Name of product/service
+              $ref: "./example-payload/Search.yaml"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -309,152 +38,10 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/OrderSchema'
-                - allOf:
-                    - properties:
-                        message:
-                          properties:
-                            order:
-                              properties:
-                                fulfillments:
-                                  type: array
-                                  minItems: 1
-                                  items:
-                                    properties:
-                                      type:
-                                        enum:
-                                          - DELIVERY
-                                          - PICKUP
-                                    required:
-                                      - type
-                              required:
-                                - fulfillments
-                    - properties:
-                        message:
-                          properties:
-                            order:
-                              properties:
-                                provider:
-                                  properties:
-                                    id:
-                                      type: string
-                                  required:
-                                    - id
-                                items:
-                                  type: array
-                                  minItems: 1
-                                  items:
-                                    properties:
-                                      quantity:
-                                        properties:
-                                          selected:
-                                            required:
-                                              - count
-                                        required:
-                                          - selected
-                                    required:
-                                      - id
-                                      - quantity
-                              required:
-                                - provider
-                                - items
-                    - if:
-                        properties:
-                          message:
-                            properties:
-                              order:
-                                properties:
-                                  fulfillments:
-                                    type: array
-                                    items:
-                                      properties:
-                                        type:
-                                          const: DELIVERY
-                      then:
-                        properties:
-                          message:
-                            properties:
-                              order:
-                                properties:
-                                  fulfillments:
-                                    type: array
-                                    items:
-                                      properties:
-                                        stops:
-                                          type: array
-                                          minItems: 1
-                                          items:
-                                            properties:
-                                              location:
-                                                properties:
-                                                  gps:
-                                                    type: string
-                                                  address:
-                                                    type: string
-                                                  area_code:
-                                                    type: string
-                                                  city:
-                                                    properties:
-                                                      name:
-                                                        type: string
-                                                    required:
-                                                      - name
-                                                  state:
-                                                    properties:
-                                                      name:
-                                                        type: string
-                                                    required:
-                                                      - name
-                                                  country:
-                                                    properties:
-                                                      code:
-                                                        type: string
-                                                    required:
-                                                      - code
-                                                required:
-                                                  - gps
-                                                  - address
-                                                  - area_code
-                                                  - city
-                                                  - state
-                                                  - country
-                                            required:
-                                              - location
-                                      required:
-                                        - type
-                                        - stops
+                - $ref: "#/components/schemas/OrderSchema"
+                - $ref: "./example-network-policies/select/select.yaml"
             examples:
-              BAP declares the customer's cart (or equivalent) created by selecting objects from the catalog:
-                value:
-                  context:
-                    location:
-                      country:
-                        code: IND
-                      city:
-                        code: 'std:080'
-                    domain: network-domain
-                    timestamp: '2023-03-23T04:41:16Z'
-                    bap_id: example-bap.com
-                    transaction_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    message_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    version: 1.1.0
-                    action: select
-                    bap_uri: 'https://api.example-bap.com/v1'
-                    bpp_id: example-bpp.com
-                    bpp_uri: 'https://api.example-bpp.com/v1'
-                    max_callbacks: 3
-                    ttl: P120S
-                  message:
-                    order:
-                      provider:
-                        id: 1
-                      items:
-                        - id: 5777a0bf-9a08-49aa-a97d-1e5561a9622e
-                      fulfillments:
-                        - id: f1
-                          stops:
-                            - location:
-                                gps: '12.910458, 77.543089'
+              $ref: "./example-payload/Select.yaml"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -468,198 +55,10 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/OrderSchema'
-                - allOf:
-                    - properties:
-                        message:
-                          properties:
-                            order:
-                              properties:
-                                fulfillments:
-                                  type: array
-                                  minItems: 1
-                                  items:
-                                    properties:
-                                      type:
-                                        enum:
-                                          - DELIVERY
-                                          - PICKUP
-                                    required:
-                                      - type
-                              required:
-                                - fulfillments
-                    - properties:
-                        message:
-                          properties:
-                            order:
-                              properties:
-                                provider:
-                                  properties:
-                                    id:
-                                      type: string
-                                  required:
-                                    - id
-                                items:
-                                  type: array
-                                  minItems: 1
-                                  items:
-                                    properties:
-                                      quantity:
-                                        properties:
-                                          selected:
-                                            required:
-                                              - count
-                                        required:
-                                          - selected
-                                    required:
-                                      - id
-                                      - quantity
-                              required:
-                                - provider
-                                - items
-                    - if:
-                        properties:
-                          message:
-                            properties:
-                              order:
-                                properties:
-                                  fulfillments:
-                                    type: array
-                                    items:
-                                      properties:
-                                        type:
-                                          const: DELIVERY
-                      then:
-                        properties:
-                          message:
-                            properties:
-                              order:
-                                properties:
-                                  fulfillments:
-                                    type: array
-                                    items:
-                                      properties:
-                                        stops:
-                                          type: array
-                                          minItems: 1
-                                          items:
-                                            properties:
-                                              location:
-                                                properties:
-                                                  gps:
-                                                    type: string
-                                                  address:
-                                                    type: string
-                                                  area_code:
-                                                    type: string
-                                                  city:
-                                                    properties:
-                                                      name:
-                                                        type: string
-                                                    required:
-                                                      - name
-                                                  state:
-                                                    properties:
-                                                      name:
-                                                        type: string
-                                                    required:
-                                                      - name
-                                                  country:
-                                                    properties:
-                                                      code:
-                                                        type: string
-                                                    required:
-                                                      - code
-                                                required:
-                                                  - gps
-                                                  - address
-                                                  - area_code
-                                                  - city
-                                                  - state
-                                                  - country
-                                            required:
-                                              - location
-                                        customer:
-                                          properties:
-                                            person:
-                                              properties:
-                                                name:
-                                                  type: string
-                                              required:
-                                                - name
-                                            contact:
-                                              properties:
-                                                phone:
-                                                  type: string
-                                              required:
-                                                - phone
-                                          required:
-                                            - person
-                                            - contact
-                                      required:
-                                        - type
-                                        - stops
-                                        - customer
+                - $ref: "#/components/schemas/OrderSchema"
+                - $ref: "./example-network-policies/init/init.yaml"
             examples:
-              Initialize an order by providing billing and/or shipping details:
-                value:
-                  context:
-                    location:
-                      country:
-                        code: IND
-                      city:
-                        code: 'std:080'
-                    domain: network-domain
-                    timestamp: '2023-03-23T04:41:16Z'
-                    bap_id: example-bap.com
-                    transaction_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    message_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    version: 1.1.0
-                    action: init
-                    bap_uri: 'https://api.example-bap.com/v1'
-                    bpp_id: example-bpp.com
-                    bpp_uri: 'https://api.example-bpp.com/v1'
-                    max_callbacks: 3
-                    ttl: P120S
-                  message:
-                    order:
-                      provider:
-                        id: 1
-                      items:
-                        - id: 5777a0bf-9a08-49aa-a97d-1e5561a9622e
-                      fulfillments:
-                        - id: f1
-                          stops:
-                            - location:
-                                gps: '12.910458, 77.543089'
-                                address: '98 A, 6th Main Rd, Uttarahalli Hobli, Ramanjaneyanagar'
-                                country:
-                                  name: India
-                                state:
-                                  name: Karnataka
-                                city:
-                                  name: Bengaluru
-                                area_code: 560061
-                                district: Ramanjaneyanagar
-                          customer:
-                            person:
-                              name: John Doe
-                            contact:
-                              phone: +91-9897867564
-                              email: johndoe@gmail.com
-                      billing:
-                        name: John Doe
-                        email: johndoe@gmail.com
-                        phone: +91-9897867564
-                        address: '98 A, 6th Main Rd, Uttarahalli Hobli, Ramanjaneyanagar'
-                        country:
-                          name: India
-                        state:
-                          name: Karnataka
-                        city:
-                          name: Bengaluru
-                        area_code: 560061
-                        district: Ramanjaneyanagar
+              $ref: "./example-payload/Init.yaml"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -673,104 +72,10 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/OrderSchema'
-                - allOf:
-                    - if:
-                        properties:
-                          message:
-                            properties:
-                              order:
-                                properties:
-                                  payments:
-                                    type: array
-                                    items:
-                                      properties:
-                                        type:
-                                          const: PRE-ORDER
-                      then:
-                        properties:
-                          message:
-                            properties:
-                              order:
-                                properties:
-                                  payments:
-                                    type: array
-                                    items:
-                                      properties:
-                                        params:
-                                          properties:
-                                            transaction_id:
-                                              type: string
-                                          required:
-                                            - transaction_id
+                - $ref: "#/components/schemas/OrderSchema"
+                - $ref: "./example-network-policies/confirm/confirm.yaml"
             examples:
-              Initialize an order by providing billing and/or shipping details:
-                value:
-                  context:
-                    location:
-                      country:
-                        code: IND
-                      city:
-                        code: 'std:080'
-                    domain: network-domain
-                    timestamp: '2023-03-23T04:41:16Z'
-                    bap_id: example-bap.com
-                    transaction_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    message_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    version: 1.1.0
-                    action: confirm
-                    bap_uri: 'https://api.example-bap.com/v1'
-                    bpp_id: example-bpp.com
-                    bpp_uri: 'https://api.example-bpp.com/v1'
-                    max_callbacks: 3
-                    ttl: P120S
-                  message:
-                    order:
-                      provider:
-                        id: 1
-                      items:
-                        - id: 5777a0bf-9a08-49aa-a97d-1e5561a9622e
-                      fulfillments:
-                        - id: f1
-                          stops:
-                            - location:
-                                gps: '12.910458, 77.543089'
-                                address: '98 A, 6th Main Rd, Uttarahalli Hobli, Ramanjaneyanagar'
-                                country:
-                                  name: India
-                                state:
-                                  name: Karnataka
-                                city:
-                                  name: Bengaluru
-                                area_code: 560061
-                                district: Ramanjaneyanagar
-                          customer:
-                            person:
-                              name: John Doe
-                            contact:
-                              phone: +91-9897867564
-                              email: johndoe@gmail.com
-                      billing:
-                        name: John Doe
-                        email: johndoe@gmail.com
-                        phone: +91-9897867564
-                        address: '98 A, 6th Main Rd, Uttarahalli Hobli, Ramanjaneyanagar'
-                        country:
-                          name: India
-                        state:
-                          name: Karnataka
-                        city:
-                          name: Bengaluru
-                        area_code: 560061
-                        district: Ramanjaneyanagar
-                      payments:
-                        - id: 7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
-                          type: ON-FULFILLMENT
-                          status: PAID
-                          params:
-                            transaction_id: razor121314413
-                            amount: '81'
-                            currency: INR
+              $ref: "./example-payload/Confirm.yaml"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -784,7 +89,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/StatusSchema'
+                - $ref: "#/components/schemas/StatusSchema"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -798,7 +103,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/TrackSchema'
+                - $ref: "#/components/schemas/TrackSchema"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -812,7 +117,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/CancelSchema'
+                - $ref: "#/components/schemas/CancelSchema"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -826,7 +131,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/UpdateSchema'
+                - $ref: "#/components/schemas/UpdateSchema"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -840,7 +145,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/RatingSchema'
+                - $ref: "#/components/schemas/RatingSchema"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -854,7 +159,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/SupportSchema'
+                - $ref: "#/components/schemas/SupportSchema"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -869,222 +174,14 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/CatalogSchema'
-                - allOf:
-                    - properties:
-                        message:
-                          properties:
-                            catalog:
-                              properties:
-                                providers:
-                                  type: array
-                                  items:
-                                    properties:
-                                      descriptor:
-                                        required:
-                                          - name
-                                          - short_desc
-                                          - long_desc
-                                          - images
-                                      categories:
-                                        type: array
-                                        uniqueItems: true
-                                        minItems: 1
-                                        items:
-                                          properties:
-                                            descriptor:
-                                              properties:
-                                                code:
-                                                  enum:
-                                                    - grocery
-                                                    - electronic
-                                              required:
-                                                - code
-                                          required:
-                                            - descriptor
-                                      fulfillments:
-                                        type: array
-                                        items:
-                                          properties:
-                                            type:
-                                              enum:
-                                                - DELIVERY
-                                                - PICKUP
-                                          required:
-                                            - id
-                                            - type
-                                      items:
-                                        type: array
-                                        items:
-                                          required:
-                                            - id
-                                            - descriptor
-                                            - price
-                                    required:
-                                      - id
-                                      - descriptor
-                                      - categories
-                                      - fulfillments
-                                      - items
-                    - if:
-                        properties:
-                          message:
-                            properties:
-                              catalog:
-                                properties:
-                                  providers:
-                                    type: array
-                                    items:
-                                      properties:
-                                        items:
-                                          type: array
-                                          items:
-                                            properties:
-                                              category_ids:
-                                                contains:
-                                                  const: c2
-                      then:
-                        properties:
-                          message:
-                            properties:
-                              catalog:
-                                properties:
-                                  providers:
-                                    type: array
-                                    items:
-                                      properties:
-                                        items:
-                                          type: array
-                                          items:
-                                            properties:
-                                              tags:
-                                                type: array
-                                                items:
-                                                  properties:
-                                                    list:
-                                                      type: array
-                                                      minItems: 3
-                                                      uniqueItems: true
-                                                      items:
-                                                        properties:
-                                                          descriptor:
-                                                            properties:
-                                                              code:
-                                                                type: string
-                                                                enum:
-                                                                  - user-manual
-                                                                  - technical-specs
-                                                                  - model-no
-                    - if:
-                        properties:
-                          message:
-                            properties:
-                              catalog:
-                                properties:
-                                  providers:
-                                    type: array
-                                    items:
-                                      properties:
-                                        items:
-                                          type: array
-                                          items:
-                                            properties:
-                                              category_ids:
-                                                contains:
-                                                  const: c1
-                      then:
-                        properties:
-                          message:
-                            properties:
-                              catalog:
-                                properties:
-                                  providers:
-                                    type: array
-                                    items:
-                                      properties:
-                                        items:
-                                          type: array
-                                          items:
-                                            properties:
-                                              tags:
-                                                type: array
-                                                items:
-                                                  properties:
-                                                    list:
-                                                      type: array
-                                                      minItems: 4
-                                                      uniqueItems: true
-                                                      items:
-                                                        properties:
-                                                          descriptor:
-                                                            properties:
-                                                              code:
-                                                                type: string
-                                                                enum:
-                                                                  - date_of_manfacturing
-                                                                  - date_of_expiry
-                                                                  - country_of_origin
-                                                                  - type
+                - $ref: "#/components/schemas/CatalogSchema"
+                - $ref: "./example-network-policies/on_search/on_search.yaml"
                 - properties:
                     action:
                       enum:
                         - on_search
             examples:
-              BPP sends its catalog in response to a search request:
-                value:
-                  context:
-                    location:
-                      country:
-                        code: IND
-                      city:
-                        code: 'std:080'
-                    domain: network-domain
-                    timestamp: '2023-03-23T04:41:16Z'
-                    bap_id: example-bap.com
-                    transaction_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    message_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    version: 1.1.0
-                    action: on_search
-                    bap_uri: 'https://api.example-bap.com/v1'
-                    bpp_id: example-bpp.com
-                    bpp_uri: 'https://api.example-bpp.com/v1'
-                    max_callbacks: 3
-                    ttl: P120S
-                  message:
-                    catalog:
-                      descriptor:
-                        name: Sample BPP Provider Name
-                      providers:
-                        - id: '1'
-                          descriptor:
-                            name: Provider 1 Name
-                          locations:
-                            - id: '1'
-                              gps: '12.9164682,77.6089985'
-                            - id: '2'
-                              gps: '12.91671,77.6092983'
-                          items:
-                            - id: 5777a0bf-9a08-49aa-a97d-1e5561a9622e
-                              descriptor:
-                                name: Item 1
-                              price:
-                                value: '75'
-                                currency: INR
-                              tags:
-                                - descriptor:
-                                    name: Tag Group Name
-                                  list:
-                                    - descriptor:
-                                        name: Tag List Item
-                                      value: Sample Value
-                                      display: true
-                              fulfillment_ids:
-                                - f1
-                          fulfillments:
-                            - id: f1
-                              type: Fulfillment_type_1
-                            - id: f2
-                              type: Fulfillment_type_2
+              $ref: "./example-payload/OnSearch.yaml"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -1098,87 +195,10 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/OrderSchema'
-                - allOf:
-                    - properties:
-                        message:
-                          properties:
-                            order:
-                              properties:
-                                provider:
-                                  required:
-                                    - id
-                                items:
-                                  minItems: 1
-                              required:
-                                - id
-                                - provider
-                                - items
-                                - quote
+                - $ref: "#/components/schemas/OrderSchema"
+                - $ref: "./example-network-policies/on_select/on_select.yaml"
             examples:
-              Send draft order object with quoted price for selected items:
-                value:
-                  context:
-                    location:
-                      country:
-                        code: IND
-                      city:
-                        code: 'std:080'
-                    domain: network-domain
-                    timestamp: '2023-03-23T04:41:16Z'
-                    bap_id: example-bap.com
-                    transaction_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    message_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    version: 1.1.0
-                    action: on_select
-                    bap_uri: 'https://api.example-bap.com/v1'
-                    bpp_id: example-bpp.com
-                    bpp_uri: 'https://api.example-bpp.com/v1'
-                    max_callbacks: 3
-                    ttl: P120S
-                  message:
-                    order:
-                      providers:
-                        id: '1'
-                        descriptor:
-                          name: Provider 1 Name
-                      items:
-                        - id: 5777a0bf-9a08-49aa-a97d-1e5561a9622e
-                          descriptor:
-                            name: Item 1
-                          price:
-                            value: '75'
-                            currency: INR
-                          tags:
-                            - descriptor:
-                                name: Tag Group Name
-                              list:
-                                - descriptor:
-                                    name: Tag List Item
-                                  value: Sample Value
-                                  display: true
-                          fulfillment_ids:
-                            - f1
-                      fulfillments:
-                        - id: f1
-                          type: Fulfillment_type_1
-                          stops:
-                            - location:
-                                gps: '12.910458, 77.543089'
-                      quote:
-                        price:
-                          value: '81'
-                          currency: INR
-                        breakup:
-                          - title: Total Item Price
-                            price:
-                              value: '75'
-                              currency: INR
-                          - title: Taxes
-                            price:
-                              value: '6'
-                              currency: INR
-                        ttl: P200S
+              $ref: "./example-payload/OnSelect.yaml"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -1192,158 +212,10 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/OrderSchema'
-                - allOf:
-                    - properties:
-                        message:
-                          properties:
-                            order:
-                              properties:
-                                provider:
-                                  properties:
-                                    id:
-                                      type: string
-                                  required:
-                                    - id
-                                items:
-                                  minItems: 1
-                                cancellation_terms:
-                                  type: array
-                              required:
-                                - provider
-                                - items
-                                - fulfillments
-                                - quote
-                                - billing
-                                - payments
-                                - cancellation_terms
-                    - properties:
-                        message:
-                          properties:
-                            order:
-                              properties:
-                                cancellation_terms:
-                                  type: array
-                                  items:
-                                    properties:
-                                      cancellation_fee:
-                                        oneOf:
-                                          - properties:
-                                              amount:
-                                                properties:
-                                                  currency:
-                                                    type: string
-                                                  value:
-                                                    type: string
-                                                required:
-                                                  - currency
-                                                  - value
-                                            required:
-                                              - amount
-                                          - properties:
-                                              percentage:
-                                                type: string
-                                            required:
-                                              - percentage
+                - $ref: "#/components/schemas/OrderSchema"
+                - $ref: "./example-network-policies/on_init/on_init.yaml"
             examples:
-              Send order object with payment details updated:
-                value:
-                  context:
-                    location:
-                      country:
-                        code: IND
-                      city:
-                        code: 'std:080'
-                    domain: network-domain
-                    timestamp: '2023-03-23T04:41:16Z'
-                    bap_id: example-bap.com
-                    transaction_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    message_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    version: 1.1.0
-                    action: on_init
-                    bap_uri: 'https://api.example-bap.com/v1'
-                    bpp_id: example-bpp.com
-                    bpp_uri: 'https://api.example-bpp.com/v1'
-                    max_callbacks: 3
-                    ttl: P120S
-                  message:
-                    order:
-                      providers:
-                        id: '1'
-                        descriptor:
-                          name: Provider 1 Name
-                      items:
-                        - id: 5777a0bf-9a08-49aa-a97d-1e5561a9622e
-                          descriptor:
-                            name: Item 1
-                          price:
-                            value: '75'
-                            currency: INR
-                          tags:
-                            - descriptor:
-                                name: Tag Group Name
-                              list:
-                                - descriptor:
-                                    name: Tag List Item
-                                  value: Sample Value
-                                  display: true
-                          fulfillment_ids:
-                            - f1
-                      fulfillments:
-                        - id: f1
-                          type: Fulfillment_type_1
-                          stops:
-                            - location:
-                                gps: '12.910458, 77.543089'
-                                address: '98 A, 6th Main Rd, Uttarahalli Hobli, Ramanjaneyanagar'
-                                country:
-                                  name: India
-                                state:
-                                  name: Karnataka
-                                city:
-                                  name: Bengaluru
-                                area_code: 560061
-                                district: Ramanjaneyanagar
-                          customer:
-                            person:
-                              name: John Doe
-                            contact:
-                              phone: +91-9897867564
-                              email: johndoe@gmail.com
-                      quote:
-                        price:
-                          value: '81'
-                          currency: INR
-                        breakup:
-                          - title: Total Item Price
-                            price:
-                              value: '75'
-                              currency: INR
-                          - title: Taxes
-                            price:
-                              value: '6'
-                              currency: INR
-                        ttl: P200S
-                      payments:
-                        - id: 7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
-                          type: ON-FULFILLMENT
-                          status: NOT-PAID
-                          params:
-                            amount: '81'
-                            currency: INR
-                      billing:
-                        name: John Doe
-                        email: johndoe@gmail.com
-                        phone: +91-9897867564
-                        address: '98 A, 6th Main Rd, Uttarahalli Hobli, Ramanjaneyanagar'
-                        country:
-                          name: India
-                        state:
-                          name: Karnataka
-                        city:
-                          name: Bengaluru
-                        area_code: 560061
-                        district: Ramanjaneyanagar
+              $ref: "./example-payload/OnInit.yaml"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -1357,142 +229,10 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/OrderSchema'
-                - allOf:
-                    - properties:
-                        message:
-                          properties:
-                            order:
-                              properties:
-                                provider:
-                                  required:
-                                    - id
-                                items:
-                                  minItems: 1
-                                fulfillments:
-                                  type: array
-                                  items:
-                                    properties:
-                                      state:
-                                        properties:
-                                          descriptor:
-                                            properties:
-                                              code:
-                                                const: ACCEPTED
-                                        required:
-                                          - descriptor
-                                    required:
-                                      - state
-                              required:
-                                - id
-                                - provider
-                                - items
-                                - billing
+                - $ref: "#/components/schemas/OrderSchema"
+                - $ref: "./example-network-policies/on_confirm/on_confirm.yaml"
             examples:
-              Send active order object:
-                value:
-                  context:
-                    location:
-                      country:
-                        code: IND
-                      city:
-                        code: 'std:080'
-                    domain: network-domain
-                    timestamp: '2023-03-23T04:41:16Z'
-                    bap_id: example-bap.com
-                    transaction_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    message_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
-                    version: 1.1.0
-                    action: on_confirm
-                    bap_uri: 'https://api.example-bap.com/v1'
-                    bpp_id: example-bpp.com
-                    bpp_uri: 'https://api.example-bpp.com/v1'
-                    max_callbacks: 3
-                    ttl: P120S
-                  message:
-                    order:
-                      id: 7751bd26-3fdc-47ca-9b64-e998dc5abe68
-                      providers:
-                        id: '1'
-                        descriptor:
-                          name: Provider 1 Name
-                      items:
-                        - id: 5777a0bf-9a08-49aa-a97d-1e5561a9622e
-                          descriptor:
-                            name: Item 1
-                          price:
-                            value: '75'
-                            currency: INR
-                          tags:
-                            - descriptor:
-                                name: Tag Group Name
-                              list:
-                                - descriptor:
-                                    name: Tag List Item
-                                  value: Sample Value
-                                  display: true
-                          fulfillment_ids:
-                            - f1
-                      fulfillments:
-                        - id: f1
-                          type: Fulfillment_type_1
-                          state:
-                            descriptor:
-                              code: ORDER_FULFILMENT_STATE_1
-                              name: Order fulfilment state description
-                          stops:
-                            - location:
-                                gps: '12.910458, 77.543089'
-                                address: '98 A, 6th Main Rd, Uttarahalli Hobli, Ramanjaneyanagar'
-                                country:
-                                  name: India
-                                state:
-                                  name: Karnataka
-                                city:
-                                  name: Bengaluru
-                                area_code: 560061
-                                district: Ramanjaneyanagar
-                          customer:
-                            person:
-                              name: John Doe
-                            contact:
-                              phone: +91-9897867564
-                              email: johndoe@gmail.com
-                      quote:
-                        price:
-                          value: '81'
-                          currency: INR
-                        breakup:
-                          - title: Total Item Price
-                            price:
-                              value: '75'
-                              currency: INR
-                          - title: Taxes
-                            price:
-                              value: '6'
-                              currency: INR
-                        ttl: P200S
-                      payments:
-                        - id: 7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
-                          type: ON-FULFILLMENT
-                          status: PAID
-                          params:
-                            transaction_id: razor121314413
-                            amount: '81'
-                            currency: INR
-                      billing:
-                        name: John Doe
-                        email: johndoe@gmail.com
-                        phone: +91-9897867564
-                        address: '98 A, 6th Main Rd, Uttarahalli Hobli, Ramanjaneyanagar'
-                        country:
-                          name: India
-                        state:
-                          name: Karnataka
-                        city:
-                          name: Bengaluru
-                        area_code: 560061
-                        district: Ramanjaneyanagar
+              $ref: "./example-payload/OnConfirm.yaml"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -1506,7 +246,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/OnTrackSchema'
+                - $ref: "#/components/schemas/OnTrackSchema"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -1520,7 +260,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/OrderSchema'
+                - $ref: "#/components/schemas/OrderSchema"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -1534,7 +274,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/OrderSchema'
+                - $ref: "#/components/schemas/OrderSchema"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -1548,7 +288,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/OrderSchema'
+                - $ref: "#/components/schemas/OrderSchema"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -1562,7 +302,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/OnRatingSchema'
+                - $ref: "#/components/schemas/OnRatingSchema"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -1576,7 +316,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/OnSupportSchema'
+                - $ref: "#/components/schemas/OnSupportSchema"
       responses:
         default:
           $ref: '#/components/schemas/DefaultResponse'
@@ -1864,13 +604,13 @@ components:
           description: The duration in ISO8601 format after timestamp for which this message holds valid
           type: string
       required:
-        - action
-        - domain
-        - version
-        - bap_id
-        - bap_uri
-        - transaction_id
-        - message_id
+          - action
+          - domain
+          - version
+          - bap_id
+          - bap_uri
+          - transaction_id
+          - message_id
     Country:
       description: Describes a country
       type: object
@@ -1948,7 +688,7 @@ components:
           description: 'Standard code representing the domain. The standard is usually published as part of the network policy. Furthermore, the network facilitator should also provide a mechanism to provide the supported domains of a network.'
           type: string
           enum:
-            - 'localretail:shopping'
+            - localretail:shopping
         additional_info:
           description: A url that contains addtional information about that domain.
           allOf:
@@ -2073,6 +813,7 @@ components:
                     - OUT_FOR_DELIVERY
                     - DELIVERED
                     - CANCELLED
+
         updated_at:
           type: string
           format: date-time
@@ -2452,9 +1193,9 @@ components:
           type: string
           default: Default
           enum:
-            - DEFAULT
-            - PRE_ORDER
-            - BACKORDER
+            - DEFAULT #NORMAL ORDER
+            - PRE_ORDER #NOT RELEAED YET
+            - BACKORDER #UNAVILABLE
             - REPLACEMENT_ORDER
         provider:
           description: Details of the provider whose catalog items have been selected.
@@ -3103,6 +1844,7 @@ components:
                 $ref: '#/components/schemas/Error'
             required:
               - message
+
     IntentSchema:
       type: object
       properties:
@@ -3240,7 +1982,7 @@ components:
       required:
         - context
         - message
-    UpdateSchema:
+    UpdateSchema:  
       type: object
       properties:
         context:
@@ -3313,7 +2055,7 @@ components:
       required:
         - context
         - message
-    OnTrackSchema:
+    OnTrackSchema:  
       type: object
       properties:
         context:

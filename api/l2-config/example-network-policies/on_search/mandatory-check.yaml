@@ -1,0 +1,51 @@
+properties:
+  message:
+    properties:
+      catalog:
+        properties:
+          providers:
+            type: array
+            items:
+              properties:
+                descriptor:
+                  required:
+                    - name
+                    - short_desc
+                    - long_desc
+                    - images
+                categories:
+                  type: array
+                  uniqueItems: true
+                  minItems: 1
+                  items:
+                    properties:
+                      descriptor:
+                        properties:
+                          code:
+                            enum: ["grocery","electronic"]
+                        required:
+                          - code
+                    required:
+                      - descriptor
+                fulfillments:
+                  type: array
+                  items:
+                    properties:
+                      type: 
+                        enum: ["DELIVERY", "PICKUP"]
+                    required:
+                      - id
+                      - type
+                items: 
+                  type: array
+                  items:
+                    required:
+                      - id
+                      - descriptor
+                      - price
+              required:
+                - id
+                - descriptor
+                - categories
+                - fulfillments
+                - items

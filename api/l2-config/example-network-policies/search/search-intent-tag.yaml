@@ -1,0 +1,13 @@
+properties:
+  message:
+    properties:
+      intent:
+        properties:
+          tags:
+            type: array
+            items:
+              properties:
+                descriptor:
+                  properties:
+                    code:
+                      enum: ["BUYER_FINDER_FEES", "SETTLEMENT_TERMS"]

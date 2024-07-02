@@ -1,0 +1,4 @@
+allOf:
+  - $ref : "./mandatory-check.yaml"
+  - $ref : "./tags-check-electronic.yaml"
+  - $ref : "./tags-check-grocery.yaml"

@@ -1,0 +1,23 @@
+properties:
+  message:
+    properties:
+      order:
+        properties:
+          provider:
+            properties:
+              id:
+                type: string
+            required:
+              - id
+          items:
+            minItems: 1
+          cancellation_terms:
+            type: array
+        required:
+          - provider
+          - items
+          - fulfillments
+          - quote
+          - billing
+          - payments
+          - cancellation_terms

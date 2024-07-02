@@ -1,0 +1,16 @@
+properties:
+  message:
+    properties:
+      order:
+        properties:
+          fulfillments: 
+            type: array
+            minItems: 1
+            items: 
+              properties:
+                type:
+                  enum: ["DELIVERY", "PICKUP"]
+              required: 
+                - type
+        required:
+          - fulfillments

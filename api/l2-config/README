@@ -1,0 +1,7 @@
+Buildign the retail layer2 config for the shopping use case:
+  Install the swagger-cli:
+    sudo npm install -g swagger-cli
+  Go to the root directory of this project
+  Run the following command to generate the layer2 config for the shopping use case:
+    swagger-cli bundle localretail_template.yaml --outfile localretail_shopping_1.1.0.yaml --type yaml
+  The final layer2 config will be in localretail_shopping_1.1.0.yaml.

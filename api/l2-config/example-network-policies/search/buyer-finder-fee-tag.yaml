@@ -1,0 +1,52 @@
+if:
+  properties:
+    message:
+      properties:
+        intent:
+          properties:
+            tags:
+              items:
+                properties:
+                  descriptor:
+                    properties:
+                      code:
+                        const: "BUYER_FINDER_FEES"
+then:
+  properties:
+    message:
+      properties:
+        intent:
+          properties:
+            tags:
+              items:
+                properties:
+                  list:
+                    type: array
+                    items:
+                      allOf:
+                        - if:
+                            properties:
+                              descriptor:
+                                properties:
+                                  code:
+                                    const: BUYER_FINDER_FEES_PERCENTAGE
+                          then:
+                            properties:
+                              value:
+                                pattern: '^(0|[1-9][0-9]?(\.\d+)?|99(\.9+)?)$'
+                            required:
+                              - descriptor
+                              - value
+                        - if:
+                            properties:
+                              descriptor:
+                                properties:
+                                  code:
+                                    const: BUYER_FINDER_FEES_AMOUNT
+                          then:
+                            properties:
+                              value:
+                                pattern: ^-?\d+(\.\d+)?$
+                            required:
+                              - descriptor
+                              - value

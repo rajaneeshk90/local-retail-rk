@@ -1,0 +1,29 @@
+properties:
+  message:
+    properties:
+      order:
+        properties:
+          provider:
+            required:
+              - id
+          items:
+            minItems: 1
+          fulfillments:
+            type: array
+            items:
+              properties:
+                state: 
+                  properties:
+                    descriptor:
+                      properties:
+                        code:
+                          const: "ACCEPTED"
+                  required:
+                    - descriptor   
+              required:
+                - state   
+        required:
+          - id
+          - provider
+          - items
+          - billing

@@ -1,0 +1,4 @@
+allOf:
+  - $ref : "./allowed-fulfillment.yaml"
+  - $ref : "./mandatory-check.yaml"
+  - $ref : "./mandatory-check-for-delivery.yaml"

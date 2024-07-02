@@ -1,0 +1,67 @@
+Initialize an order by providing billing and/or shipping details:
+  value:
+    context:
+      location:
+        country:
+          code: IND
+        city:
+          code: std:080
+      domain: "network-domain"
+      timestamp: "2023-03-23T04:41:16Z"
+      bap_id: example-bap.com
+      transaction_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
+      message_id: 6743e9e2-4fb5-487c-92b7-13ba8018f176
+      version: 1.1.0
+      action: confirm
+      bap_uri: https://api.example-bap.com/v1
+      bpp_id: example-bpp.com
+      bpp_uri: https://api.example-bpp.com/v1
+      max_callbacks: 3
+      ttl: P120S
+    message:
+      order:
+        provider:
+          id: 1
+        items:
+          - id: 5777a0bf-9a08-49aa-a97d-1e5561a9622e
+        fulfillments:
+          - id: f1
+            stops:
+              - location:
+                  gps: 12.910458, 77.543089
+                  address: 98 A, 6th Main Rd, Uttarahalli Hobli, Ramanjaneyanagar
+                  country:
+                    name: India
+                  state:
+                    name: Karnataka
+                  city:
+                    name: Bengaluru
+                  area_code: 560061
+                  district: Ramanjaneyanagar
+            customer:
+              person:
+                name: John Doe
+              contact:
+                phone: +91-9897867564
+                email: "johndoe@gmail.com"
+        billing:
+          name: John Doe
+          email: "johndoe@gmail.com"
+          phone: +91-9897867564
+          address: 98 A, 6th Main Rd, Uttarahalli Hobli, Ramanjaneyanagar
+          country:
+            name: India
+          state:
+            name: Karnataka
+          city:
+            name: Bengaluru
+          area_code: 560061
+          district: Ramanjaneyanagar
+        payments:
+          - id: 7f7896dd-787e-4a0b-8675-e9e6fe93bb8f
+            type: ON-FULFILLMENT
+            status: PAID
+            params:
+              transaction_id: razor121314413
+              amount: "81"
+              currency: INR

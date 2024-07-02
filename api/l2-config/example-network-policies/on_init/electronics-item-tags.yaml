@@ -1,0 +1,43 @@
+if:
+  properties:
+    message:
+      properties:
+        order:
+          properties:
+            items:
+              type: array
+              items:
+                properties:
+                  descriptor:
+                    properties:
+                      code:
+                        const: "ELECTRONICS"
+then:
+  properties:
+    message:
+      properties:
+        order:
+          properties:
+            items:
+              type: array
+              items:
+                properties:
+                  tags:
+                    type: array
+                    items:
+                      properties:
+                        list:
+                          type: array
+                          items:
+                            allOf:
+                              - properties:
+                                  descriptor:
+                                    properties:
+                                      code:
+                                        const: MANUAL
+                              - properties:
+                                  descriptor:
+                                    properties:
+                                      code:
+                                        const: WARRANTY
+                                
